@@ -11,6 +11,76 @@
  * 
  * @return int 
  */
+
+int State::evaluate(){
+  int white = 0;
+  int find_king = 0;
+  for(int i=0;i<6;i++){
+    for(int j=0;j<5;j++){
+      int cur = this->board.board[0][i][j];
+      if(cur == 6) find_king = 1;
+      switch(cur){
+        case 1:
+        white = white + 2*i;
+        break;
+        case 2:
+        white += 6;
+        break;
+        case 3:
+        white += 7;
+        break;
+        case 4:
+        white += 8;
+        break;
+        case 5:
+        white += 20;
+        break;
+        case 6:
+        white += 0;
+        break;
+        default:
+        white += 0;
+      }
+    }
+  }
+  if(!find_king) white = -999999;
+
+  int black = 0;
+  find_king = 0;
+  for(int i=0;i<6;i++){
+    for(int j=0;j<5;j++){
+      int cur = this->board.board[1][i][j];
+      if(cur == 6) find_king = 1;
+      switch(cur){
+        case 1:
+        black = black + 2*(6-i);
+        break;
+        case 2:
+        black += 6;
+        break;
+        case 3:
+        black += 7;
+        break;
+        case 4:
+        black += 8;
+        break;
+        case 5:
+        black += 20;
+        break;
+        case 6:
+        black += 0;
+        break;
+        default:
+        black += 0;
+      }
+    }
+  }
+  if(!find_king) black = -999999;
+  if(!this->player) return white - black;
+  else return black - white;
+}
+
+ /*
 int wking[6][5]{
   {0, 0, 0, 0, 0},
   {0, 0,-50, 0, 0},
@@ -153,7 +223,7 @@ int State::evaluate(){
   if(!this->player) return white - black;
   else return black - white;
 }
-
+*/
 
 /**
  * @brief return next state after the move
