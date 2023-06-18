@@ -12,6 +12,7 @@
  * @return int 
  */
 
+/*
 int State::evaluate(){
   int white = 0;
   int find_king = 0;
@@ -79,8 +80,8 @@ int State::evaluate(){
   if(!this->player) return white - black;
   else return black - white;
 }
-
- /*
+*/
+ 
 int wking[6][5]{
   {0, 0, 0, 0, 0},
   {0, 0,-50, 0, 0},
@@ -154,28 +155,22 @@ int State::evaluate(){
       if(cur == 6) find_king = 1;
       switch(cur){
         case 1:
-        white += 200;
-        white += wpawn[i][j];
+        white = white + 2*wpawn[i][j];
         break;
         case 2:
-        white += 300;
-        white+= wbqueen_rook[i][j];
+        white = white + 6*wbqueen_rook[i][j];
         break;
         case 3:
-        white += 300;
-        white+= wbknight[i][j];
+        white = white + 7*wbknight[i][j];
         break;
         case 4:
-        white += 300;
-        white+= wbbishop[i][j];
+        white = white + 8*wbbishop[i][j];
         break;
         case 5:
-        white += 500;
-        white+= wbqueen_rook[i][j];
+        white = white + 20*wbqueen_rook[i][j];
         break;
         case 6:
-        white += 300;
-        white+= wking[i][j];
+        white += wking[i][j];
         break;
         default:
         break;
@@ -191,28 +186,22 @@ int State::evaluate(){
       if(cur == 6) find_king = 1;
       switch(cur){
         case 1:
-        black += 200;
-        black += bpawn[i][j];
+        black = black + 2*bpawn[i][j];
         break;
         case 2:
-        black += 300;
-        black+= wbqueen_rook[i][j];
+        black = black + 6*wbqueen_rook[i][j];
         break;
         case 3:
-        black += 300;
-        black+= wbknight[i][j];
+        black = black + 7*wbknight[i][j];
         break;
         case 4:
-        black += 300;
-        black+= wbbishop[i][j];
+        black = black + 8*wbbishop[i][j];
         break;
         case 5:
-        black += 500;
-        black+= wbqueen_rook[i][j];
+        black = black + 20*wbqueen_rook[i][j];
         break;
         case 6:
-        black += 300;
-        black+= bking[i][j];
+        black += bking[i][j];
         break;
         default:
         break;
@@ -223,7 +212,6 @@ int State::evaluate(){
   if(!this->player) return white - black;
   else return black - white;
 }
-*/
 
 /**
  * @brief return next state after the move
