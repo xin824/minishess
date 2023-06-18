@@ -168,7 +168,7 @@ int State::evaluate(){
    wr = wkx + 1;
    if(wl>=6) wl = 5;
    wd = wky + 1;
-   if(wf>=5) wf = 4;
+   if(wd>=5) wd = 4;
   } 
   int bl = 0,bu = 0,br = 0,bd = 0;
   if(bfind_king){
@@ -227,7 +227,6 @@ int State::evaluate(){
       int protect = 0;
       int cur = this->board.board[1][i][j];
       if(bl<=i&&i<=br&&bu<=j&&j<=bd) protect = 1000;
-      if(cur == 6) find_king = 1;
       switch(cur){
         case 1:
         black += protect;
