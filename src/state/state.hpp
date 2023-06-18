@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <vector>
 #include <utility>
+//#include "../policy/minimax.hpp"
 
 #include "../config.hpp"
 
@@ -29,6 +30,7 @@ class Board{
       {0, 0, 0, 0, 0},
       {0, 0, 0, 0, 0},
       {0, 0, 0, 0, 0},
+      //6:king 5:queen 4:bishop 3:knight 2:rook 1:pawn
     }};
 };
 
@@ -42,16 +44,24 @@ enum GameState {
 
 class State{
   public:
+    //friend class minimax;
     //You may want to add more property for a state
     GameState game_state = UNKNOWN;
     Board board;
     int player = 0;
+    int value = 0;
+    Move move;
     std::vector<Move> legal_actions;
     
     State(){};
     State(int player): player(player){};
-    State(Board board): board(board){};
+    State(Board board): board(board){
+      value = evaluate();
+    };
     State(Board board, int player): board(board), player(player){};
+    State(Board board, int player, Move move): board(board), player(player),move(move){
+      value = evaluate();
+    };
     
     int evaluate();
     State* next_state(Move move);
