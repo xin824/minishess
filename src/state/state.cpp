@@ -11,8 +11,135 @@
  * 
  * @return int 
  */
+int wking[6][5]{
+  {0, 0, 0, 0, 0},
+  {0, 0,-5, 0, 0},
+  {0,-5,-15,-5,0},
+  {0, 0,-5, 0, 0},
+  {0, 0, 0, 0, 0},
+  {5,10,15,10, 5}
+};
+
+int bking[6][5]{
+  {5,10,15,10, 5},
+  {0, 0, 0, 0, 0},
+  {0, 0,-5, 0, 0},
+  {0,-5,-15,-5,0},
+  {0, 0,-5, 0, 0},
+  {0, 0, 0, 0, 0}
+};
+
+int wbqueen_rook[6][5]{
+  {0, 0, 0, 0, 0},
+  {0, 3, 5, 3, 0},
+  {0, 5,15, 5, 0},
+  {0, 5,15, 5, 0},
+  {0, 3, 5, 3, 0},
+  {0, 0, 0, 0, 0}
+};
+
+int wbbishop[6][5]{
+  {10, 5, 5, 5,10},
+  {10, 0, 0, 0,10},
+  {10, 0, 0, 0,10},
+  {10, 0, 0, 0,10},
+  {10, 0, 0, 0,10},
+  {10, 5, 5, 5,10}
+};
+
+int wbknight[6][5]{
+  {15, 5, 0, 5,15},
+  { 5, 0, 0, 0, 5},
+  { 0, 0,15, 0, 0},
+  { 0, 0,15, 0, 0},
+  { 5, 0, 0, 0, 5},
+  {15, 5, 0, 5,15}
+};
+
+int wpawn[6][5]{
+  {15,15,15,15,15},
+  {10,10,10,10,10},
+  { 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0}
+};
+
+int bpawn[6][5]{
+  { 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0},
+  { 0, 0, 0, 0, 0},
+  {10,10,10,10,10},
+  {15,15,15,15,15}
+};
+
 int State::evaluate(){
   // [TODO] design your own evaluation function
+  int white = 0;
+  int find_king = 0;
+  for(int i=0;i<6;i++){
+    for(int j=0;j<5;j++){
+      int cur = this->board.board[0][i][j];
+      if(cur == 6) find_king = 1;
+      switch(cur){
+        case 1:
+        white += wpawn[i][j];
+        break;
+        case 2:
+        white+= wbqueen_rook[i][j];
+        break;
+        case 3:
+        white+= wbknight[i][j];
+        break;
+        case 4:
+        white+= wbbishop[i][j];
+        break;
+        case 5:
+        white+= wbqueen_rook[i][j];
+        break;
+        case 6:
+        white+= wking[i][j];
+        break;
+        default:
+        break;
+      }
+    }
+  }
+  if(!find_king) white = -999999;
+  find_king=0;
+  int black = 0;
+  for(int i=0;i<6;i++){
+    for(int j=0;j<5;j++){
+      int cur = this->board.board[1][i][j];
+      if(cur == 6) find_king = 1;
+      switch(cur){
+        case 1:
+        black += bpawn[i][j];
+        break;
+        case 2:
+        black+= wbqueen_rook[i][j];
+        break;
+        case 3:
+        black+= wbknight[i][j];
+        break;
+        case 4:
+        black+= wbbishop[i][j];
+        break;
+        case 5:
+        black+= wbqueen_rook[i][j];
+        break;
+        case 6:
+        black+= bking[i][j];
+        break;
+        default:
+        break;
+      }
+    }
+  }
+  if(!find_king) black = -999999;
+  if(this->player == 0) return white - black;
+  else if(this->player == 1) return black - white;
   return 0;
 }
 
