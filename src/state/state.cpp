@@ -112,7 +112,7 @@ int State::evaluate(){
       }
     }
   }
-  if(!find_king) white = -99999999;
+  if(!find_king) white = -0X7FFFFFFF;
   find_king = 0;
   int black = 0;
   for(int i=0;i<6;i++){
@@ -149,7 +149,7 @@ int State::evaluate(){
       }
     }
   }
-  if(!find_king) black = -99999999;
+  if(!find_king) black = -0X7FFFFFFF;
   if(!this->player) return white - black;
   else return black - white;
 }
