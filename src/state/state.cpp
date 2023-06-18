@@ -147,26 +147,67 @@ int bpawn[6][5]{
 
 int State::evaluate(){
   // [TODO] design your own evaluation function
-  int white = 0;
-  int find_king = 0;
+  int wfind_king = 0,bfind_king = 0;
+  int wkx = -1,wky = -1, bkx = -1,bky = -1;
   for(int i=0;i<6;i++){
     for(int j=0;j<5;j++){
+      if(this->board.board[0][i][j] == 6){
+        wkx = i,wky = j; wfind_king = 1;
+      }
+      if(this->board.board[1][i][j] == 6){
+        bkx = i,bky = j; bfind_king = 1; 
+      }
+    }
+  }
+  int wl = 0,wu = 0,wr = 0,wd = 0;
+  if(wfind_king){
+   wl = wkx - 1;
+   if(wl<0) wl = 0;
+   wu = wky - 1;
+   if(wu<0) wu = 0;
+   wr = wkx + 1;
+   if(wl>=6) wl = 5;
+   wd = wky + 1;
+   if(wf>=5) wf = 4;
+  } 
+  int bl = 0,bu = 0,br = 0,bd = 0;
+  if(bfind_king){
+   bl = bkx - 1;
+   if(bl<0) bl = 0;
+   bu = bky - 1;
+   if(bu<0) bu = 0;
+   br = bkx + 1;
+   if(bl>=6) bl = 5;
+   bd = bky + 1;
+   if(bd>=5) bd = 4;
+  } 
+  int white = 0;
+  if(!wfind_king) white = -0X7FFFFFFF;
+  else{
+  for(int i=0;i<6;i++){
+    for(int j=0;j<5;j++){
+      int protect = 0;
       int cur = this->board.board[0][i][j];
-      if(cur == 6) find_king = 1;
+      if(wl<=i&&i<=wr&&wu<=j&&j<=wd) protect = 1000;
       switch(cur){
         case 1:
+        white+=protect;
         white = white + 2*wpawn[i][j];
         break;
         case 2:
+        white+=protect;
         white = white + 6*wbqueen_rook[i][j];
         break;
         case 3:
-        white = white + 7*wbknight[i][j];
+        white+=protect;
+        white = white + 20*wbknight[i][j];
         break;
         case 4:
+        white+=protect;
         white = white + 8*wbbishop[i][j];
         break;
         case 5:
+        white+=protect;
         white = white + 20*wbqueen_rook[i][j];
         break;
         case 6:
@@ -177,27 +218,35 @@ int State::evaluate(){
       }
     }
   }
-  if(!find_king) white = -0X7FFFFFFF;
-  find_king = 0;
+  }
   int black = 0;
+  if(!bfind_king) black = -0X7FFFFFFF;
+  else{
   for(int i=0;i<6;i++){
     for(int j=0;j<5;j++){
+      int protect = 0;
       int cur = this->board.board[1][i][j];
+      if(bl<=i&&i<=br&&bu<=j&&j<=bd) protect = 1000;
       if(cur == 6) find_king = 1;
       switch(cur){
         case 1:
+        black += protect;
         black = black + 2*bpawn[i][j];
         break;
         case 2:
+        black += protect;
         black = black + 6*wbqueen_rook[i][j];
         break;
         case 3:
-        black = black + 7*wbknight[i][j];
+        black += protect;
+        black = black + 20*wbknight[i][j];
         break;
         case 4:
+        black += protect;
         black = black + 8*wbbishop[i][j];
         break;
         case 5:
+        black += protect;
         black = black + 20*wbqueen_rook[i][j];
         break;
         case 6:
@@ -208,7 +257,8 @@ int State::evaluate(){
       }
     }
   }
-  if(!find_king) black = -0X7FFFFFFF;
+  }
+  
   if(!this->player) return white - black;
   else return black - white;
 }
