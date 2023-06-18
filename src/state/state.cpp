@@ -13,52 +13,52 @@
  */
 int wking[6][5]{
   {0, 0, 0, 0, 0},
-  {0, 0,-5, 0, 0},
-  {0,-5,-15,-5,0},
-  {0, 0,-5, 0, 0},
+  {0, 0,-50, 0, 0},
+  {0,-50,-150,-50,0},
+  {0, 0,-50, 0, 0},
   {0, 0, 0, 0, 0},
-  {5,10,15,10, 5}
+  {50,100,150,100, 50}
 };
 
 int bking[6][5]{
-  {5,10,15,10, 5},
+  {50,100,150,100, 50},
   {0, 0, 0, 0, 0},
-  {0, 0,-5, 0, 0},
-  {0,-5,-15,-5,0},
-  {0, 0,-5, 0, 0},
+  {0, 0,-50, 0, 0},
+  {0,-50,-150,-50,0},
+  {0, 0,-50, 0, 0},
   {0, 0, 0, 0, 0}
 };
 
 int wbqueen_rook[6][5]{
   {0, 0, 0, 0, 0},
-  {0, 3, 5, 3, 0},
-  {0, 5,15, 5, 0},
-  {0, 5,15, 5, 0},
-  {0, 3, 5, 3, 0},
+  {0, 30, 50, 30, 0},
+  {0, 50,150, 50, 0},
+  {0, 50,150, 50, 0},
+  {0, 30, 50, 30, 0},
   {0, 0, 0, 0, 0}
 };
 
 int wbbishop[6][5]{
-  {10, 5, 5, 5,10},
-  {10, 0, 0, 0,10},
-  {10, 0, 0, 0,10},
-  {10, 0, 0, 0,10},
-  {10, 0, 0, 0,10},
-  {10, 5, 5, 5,10}
+  {100, 50, 50, 50,100},
+  {100, 0, 0, 0,100},
+  {100, 0, 0, 0,100},
+  {100, 0, 0, 0,100},
+  {100, 0, 0, 0,100},
+  {100, 50, 50, 50,100}
 };
 
 int wbknight[6][5]{
-  {15, 5, 0, 5,15},
-  { 5, 0, 0, 0, 5},
-  { 0, 0,15, 0, 0},
-  { 0, 0,15, 0, 0},
-  { 5, 0, 0, 0, 5},
-  {15, 5, 0, 5,15}
+  {150, 50, 0, 50,150},
+  { 50, 0, 0, 0, 50},
+  { 0, 0,150, 0, 0},
+  { 0, 0,150, 0, 0},
+  { 50, 0, 0, 0, 50},
+  {150, 50, 0, 50,150}
 };
 
 int wpawn[6][5]{
-  {15,15,15,15,15},
-  {10,10,10,10,10},
+  {150,150,150,150,150},
+  {100,100,100,100,100},
   { 0, 0, 0, 0, 0},
   { 0, 0, 0, 0, 0},
   { 0, 0, 0, 0, 0},
@@ -70,8 +70,8 @@ int bpawn[6][5]{
   { 0, 0, 0, 0, 0},
   { 0, 0, 0, 0, 0},
   { 0, 0, 0, 0, 0},
-  {10,10,10,10,10},
-  {15,15,15,15,15}
+  {100,100,100,100,100},
+  {150,150,150,150,150}
 };
 
 int State::evaluate(){
@@ -84,21 +84,27 @@ int State::evaluate(){
       if(cur == 6) find_king = 1;
       switch(cur){
         case 1:
+        white += 200;
         white += wpawn[i][j];
         break;
         case 2:
+        white += 300;
         white+= wbqueen_rook[i][j];
         break;
         case 3:
+        white += 300;
         white+= wbknight[i][j];
         break;
         case 4:
+        white += 300;
         white+= wbbishop[i][j];
         break;
         case 5:
+        white += 500;
         white+= wbqueen_rook[i][j];
         break;
         case 6:
+        white += 300;
         white+= wking[i][j];
         break;
         default:
@@ -106,8 +112,8 @@ int State::evaluate(){
       }
     }
   }
-  if(!find_king) white = -999999;
-  find_king=0;
+  if(!find_king) white = -99999999;
+  find_king = 0;
   int black = 0;
   for(int i=0;i<6;i++){
     for(int j=0;j<5;j++){
@@ -115,21 +121,27 @@ int State::evaluate(){
       if(cur == 6) find_king = 1;
       switch(cur){
         case 1:
+        black += 200;
         black += bpawn[i][j];
         break;
         case 2:
+        black += 300;
         black+= wbqueen_rook[i][j];
         break;
         case 3:
+        black += 300;
         black+= wbknight[i][j];
         break;
         case 4:
+        black += 300;
         black+= wbbishop[i][j];
         break;
         case 5:
+        black += 500;
         black+= wbqueen_rook[i][j];
         break;
         case 6:
+        black += 300;
         black+= bking[i][j];
         break;
         default:
@@ -137,10 +149,9 @@ int State::evaluate(){
       }
     }
   }
-  if(!find_king) black = -999999;
-  if(this->player == 0) return white - black;
-  else if(this->player == 1) return black - white;
-  return 0;
+  if(!find_king) black = -99999999;
+  if(!this->player) return white - black;
+  else return black - white;
 }
 
 
