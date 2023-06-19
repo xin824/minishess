@@ -188,7 +188,7 @@ int State::evaluate(){
     for(int j=0;j<5;j++){
       int protect = 0;
       int cur = this->board.board[0][i][j];
-      if(wl<=i&&i<=wr&&wu<=j&&j<=wd) protect = 300;
+      if(wl<=i&&i<=wr&&wu<=j&&j<=wd) protect = 10000;
       switch(cur){
         case 1:
         white+=protect;
@@ -226,7 +226,7 @@ int State::evaluate(){
     for(int j=0;j<5;j++){
       int protect = 0;
       int cur = this->board.board[1][i][j];
-      if(bl<=i&&i<=br&&bu<=j&&j<=bd) protect = 300;
+      if(bl<=i&&i<=br&&bu<=j&&j<=bd) protect = 10000;
       switch(cur){
         case 1:
         black += protect;
