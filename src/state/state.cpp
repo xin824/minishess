@@ -214,7 +214,7 @@ int State::evaluate(){
         white = white + 20*wbqueen_rook[i][j];
         break;
         case 6:
-        white = white + 20*wking[i][j];
+        white = white + 50*wking[i][j];
         break;
         default:
         break;
@@ -253,7 +253,7 @@ int State::evaluate(){
         black = black + 20*wbqueen_rook[i][j];
         break;
         case 6:
-        black = black + 20*bking[i][j];
+        black = black + 50*bking[i][j];
         break;
         default:
         break;
