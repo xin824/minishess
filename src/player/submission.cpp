@@ -40,7 +40,7 @@ void read_board(std::ifstream& fin) {
  */
 void write_valid_spot(std::ofstream& fout) {
   // Keep updating the output until getting killed.
-  int depth = 3;
+  int depth = 5;
   while(true) {
     // Choose a random spot.
     auto move = submission::get_move(root, depth);
@@ -49,7 +49,7 @@ void write_valid_spot(std::ofstream& fout) {
     depth++;
     // Remember to flush the output to ensure the last action is written to file.
     fout.flush();
-    //break;
+    break;
   }
 }
 
