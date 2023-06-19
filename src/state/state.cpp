@@ -148,6 +148,7 @@ int bpawn[6][5]{
 int State::evaluate(){
   // [TODO] design your own evaluation function
   int wfind_king = 0,bfind_king = 0;
+  /*
   int wkx = -1,wky = -1, bkx = -1,bky = -1;
   for(int i=0;i<6;i++){
     for(int j=0;j<5;j++){
@@ -181,33 +182,35 @@ int State::evaluate(){
    bd = bky + 1;
    if(bd>=5) bd = 4;
   } 
+  */
   int white = 0;
-  if(!wfind_king) white = -0X7FFFFFFF;
-  else{
+  //if(!wfind_king) white = -0X7FFFFFFF;
+  //else{
   for(int i=0;i<6;i++){
     for(int j=0;j<5;j++){
       int protect = 0;
       int cur = this->board.board[0][i][j];
-      if(wl<=i&&i<=wr&&wu<=j&&j<=wd) protect = 10000;
+      if(cur == 6) wfind_king = 1;
+      //if(wl<=i&&i<=wr&&wu<=j&&j<=wd) protect = 10000;
       switch(cur){
         case 1:
-        white+=protect;
+        //white+=protect;
         white = white + 2*wpawn[i][j];
         break;
         case 2:
-        white+=protect;
+        //white+=protect;
         white = white + 6*wbqueen_rook[i][j];
         break;
         case 3:
-        white+=protect;
+        //white+=protect;
         white = white + 20*wbknight[i][j];
         break;
         case 4:
-        white+=protect;
+        //white+=protect;
         white = white + 8*wbbishop[i][j];
         break;
         case 5:
-        white+=protect;
+        //white+=protect;
         white = white + 20*wbqueen_rook[i][j];
         break;
         case 6:
@@ -218,15 +221,17 @@ int State::evaluate(){
       }
     }
   }
-  }
+  if(!wfind_king) white = -0X7FFFFFFF;
+  //}
   int black = 0;
-  if(!bfind_king) black = -0X7FFFFFFF;
-  else{
+  //if(!bfind_king) black = -0X7FFFFFFF;
+  //else{
   for(int i=0;i<6;i++){
     for(int j=0;j<5;j++){
       int protect = 0;
       int cur = this->board.board[1][i][j];
-      if(bl<=i&&i<=br&&bu<=j&&j<=bd) protect = 10000;
+      if(cur == 6) bfind_king = 1;
+      //if(bl<=i&&i<=br&&bu<=j&&j<=bd) protect = 10000;
       switch(cur){
         case 1:
         black += protect;
@@ -256,7 +261,8 @@ int State::evaluate(){
       }
     }
   }
-  }
+  //}
+  if(!bfind_king) black = -0X7FFFFFFF;
   
   if(!this->player) return white - black;
   else return black - white;
